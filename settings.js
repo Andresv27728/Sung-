@@ -40,21 +40,21 @@ global.yukiJadibts = true
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.packname = '𝕄𝕒𝕪𝕔𝕠𝕝𝔸𝕀𝕌𝕝𝕥𝕣𝕒-𝕄𝔻'
-global.botname = '𝐌𝐚𝐲𝐜𝐨𝐥𝐀𝐈𝐔𝐥𝐭𝐫𝐚-𝐌𝐃'
-global.wm = '𝙼𝚊𝚢𝚌𝚘𝚕𝙰𝙸𝚄𝚕𝚝𝚛𝚊-𝙼𝙳'
-global.author = '𝙃𝙚𝙘𝙝𝙤 𝙥𝙤𝙧 𝙎𝙤𝙮𝙈𝙖𝙮𝙘𝙤𝙡 <3'
-global.dev = '𝙃𝙚𝙘𝙝𝙤 𝙥𝙤𝙧 𝙎𝙤𝙮𝙈𝙖𝙮𝙘𝙤𝙡 <3'
-global.textbot = '𝐌𝐚𝐲𝐜𝐨𝐥𝐀𝐈𝐔𝐥𝐭𝐫𝐚-𝐌𝐃 • 𝙃𝙚𝙘𝙝𝙤 𝙥𝙤𝙧 𝙎𝙤𝙮𝙈𝙖𝙮𝙘𝙤𝙡 <3'
-global.etiqueta = '𝙼𝚊𝚢𝚌𝚘𝚕𝙰𝙸'
+global.packname = 'Sung Jin-Woo'
+global.botname = 'Sung Jin-Woo'
+global.wm = 'Sung Jin-Woo'
+global.author = 'YoSoyYo'
+global.dev = '𝙃𝙚𝙘𝙝𝙤 𝙥𝙤𝙧 YoSoyYo'
+global.textbot = 'Sung Jin-Woo • 𝙃𝙚𝙘𝙝𝙤 𝙥𝙤𝙧 YoSoyYo'
+global.etiqueta = 'YoSoyYo'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.moneda = 'MayCoins'
+global.moneda = 'Yenes'
 global.welcom1 = '❍ Edita Con El Comando setwelcome'
 global.welcom2 = '❍ Edita Con El Comando setbye'
-global.banner = 'https://files.catbox.moe/l8ohvs.jpeg'
-global.avatar = 'https://files.catbox.moe/uvc28a.jpeg'
+global.banner = 'https://files.catbox.moe/b770a5.jpeg'
+global.avatar = 'https://files.catbox.moe/p55m1q.jpeg'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
