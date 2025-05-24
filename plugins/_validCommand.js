@@ -23,7 +23,13 @@ export async function before(m) {
     const { bestMatch } = stringSimilarity.findBestMatch(command, allCommands)
     const suggestion = bestMatch.rating > 0.3 ? `¿Quisiste decir *${usedPrefix}${bestMatch.target}*?` : ''
 
-    const mensaje = `╭─❍「 ✦ 𝚂𝚘𝚢𝙼𝚊𝚢𝚌𝚘𝚕 <𝟹 ✦ 」\n│\n├─ El hechizo *${usedPrefix}${command}* no existe en los registros del más allá.\n│\n├─ ${suggestion || 'Consulta los conjuros disponibles con:'}\n│   ⇝ *${usedPrefix}help*\n╰─✦`
+    const mensaje = `┌──「 COMANDO DESCONOCIDO 」──┐
+│ El comando *${usedPrefix}${command}* no existe.
+│ No está registrado en mi sistema... aún.
+│
+│ ${suggestion || 'Consulta los comandos disponibles con:'}
+│ ⇝ *${usedPrefix}help*
+└──────────────────────────────`;
     await m.reply(mensaje)
     return
   }
