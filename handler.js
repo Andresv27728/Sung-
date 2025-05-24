@@ -560,66 +560,48 @@ let verifyaleatorio = ['registrar', 'reg', 'verificar', 'verify', 'register'].ge
 
 const msg = {
   rowner: `
-╔═══════❖『 ✦ HANAKO-SAMA ✦ 』❖═══════╗
-║ (≖ᴗ≖✿) El hechizo *${comando}* solo puede ser
-║ invocado por los Dioses del retrete (creadores).
-╚════════════════════════════════════╝`,
+[ ACCESO DENEGADO ]
+Solo los verdaderos Monarcas tienen permiso para ejecutar *${comando}*. Tú no eres uno de ellos.`,
 
   owner: `
-╭─┈ ✦『 Control Paranormal 』✦ ┈─╮
-│ ⛧ *${comando}* está reservado para los  
-│ shinigamis programadores (desarrolladores).  
-╰───────────────────────────────╯`,
+[ COMANDO RESTRINGIDO ]
+*${comando}* está reservado para quienes cargan el peso del sistema. Los desarrolladores. No intentes sobrepasarlos.`,
 
   mods: `
-╔═──「 ✧ Espíritus Vigilantes ✧ 」──═╗
-║ Sólo los protectores del otro mundo (mods)  
-║ pueden controlar el hechizo *${comando}*.  
-╚════════════════════════════════════╝`,
+[ ACCESO SOLO A VIGILANTES ]
+El comando *${comando}* responde únicamente a los guardianes asignados. Tú no estás en esa lista.`,
 
   premium: `
-╭───✿『 ✦ ✧ MOCHI PREMIUM ✧ ✦ 』✿───╮
-│ (◍•ᴗ•◍)❤ Solo almas elegidas pueden usar  
-│ el comando sagrado *${comando}*.  
-╰──────────────────────────────────╯`,
+[ NIVEL DE PODER INSUFICIENTE ]
+Solo unidades premium pueden invocar *${comando}*. Tu autoridad no alcanza.`,
 
   group: `
-╔═━「 ☁︎ Ritual Grupal ☁︎ 」━═╗
-║ (⁎⁍̴̛ᴗ⁍̴̛⁎) *${comando}* requiere un círculo  
-║ de invocación múltiple (grupo).  
-╚═════════════════════════════╝`,
+[ ENTORNO NO COMPATIBLE ]
+*${comando}* solo puede ser activado en operaciones grupales. Este lugar no califica.`,
 
   private: `
-╭──⊹⊱『 ☁︎ Susurro Privado ☁︎ 』⊰⊹──╮
-│ Este hechizo *${comando}* solo puede ser  
-│ revelado en un santuario secreto (chat privado).  
-╰─────────────────────────────────────╯`,
+[ ENTORNO NO AUTORIZADO ]
+Este comando requiere un canal privado. Aquí hay demasiados ojos.`,
 
   admin: `
-╭────『 ✦ Líder Espiritual ✦ 』────╮
-│ El comando *${comando}* sólo responde a  
-│ los shamanes del grupo (admins).  
-╰─────────────────────────────╯`,
+[ NO TIENES AUTORIDAD ]
+*${comando}* está reservado a los líderes de esta zona. Tu rol no cumple con ese criterio.`,
 
   botAdmin: `
-(╥﹏╥) ¡Ay no!  
-No puedo usar *${comando}* si no soy un  
-espíritu superior (admin del grupo).  
-¡Dame poder MUAJAJAJA o me encierro en el baño para siempre >:(`,
+[ FUNCIÓN BLOQUEADA ]
+No tengo el control del grupo. Necesito privilegios administrativos para ejecutar *${comando}*. Obtén el poder necesario o retírate.`,
 
   unreg: `
-╔══『 ✦ PACTO FANTASMAL ✦ 』══╗
-║ (｡•́︿•̀｡) No puedes usar *${comando}*  
-║ hasta que firmes tu contrato espiritual.
-║ Usa el ritual:
-║ » #${verifyaleatorio} ${user2}.${edadaleatoria}
-╚═══════════════════════════╝`,
+[ NO RECONOCIDO ]
+No puedes usar *${comando}* hasta completar tu sincronización con el sistema.
+Usa el comando:
+» #${verifyaleatorio} ${user2}.${edadaleatoria}`,
 
   restrict: `
-⊱┈・『 ✦ FUNCIÓN SELLADA ✦ 』・┈⊰  
-(⚆_⚆) Este hechizo está encerrado por  
-un sello maldito. ¡Actívalo si te atreves!`
+[ COMANDO BLOQUEADO ]
+Esta función ha sido sellada por orden superior. No está disponible para ti.`
 }[type];
+    
 if (msg) return m.reply(msg).then(_ => m.react('✖️'))}
 
 let file = global.__filename(import.meta.url, true)
