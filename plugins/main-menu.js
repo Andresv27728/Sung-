@@ -37,43 +37,36 @@ let handler = async (m, { conn, args }) => {
 
   // MENÚ HANAKO-KUN STYLE
   let menuText = `
-╭───❖ 𝓗𝓪𝓷𝓪𝓴𝓸 𝓑𝓸𝓽 ❖───╮
+╔═════『 Sung Jin-Woo System 』═════╗
 
- ｡ﾟ☆: *.${name}.* :☆ﾟ｡  
-> *_${saludo}_*
+» Sistema operativo: Multi-Device
+» Usuario vinculado: @${userId.split('@')[0]}
+» Tiempo en línea: ${uptime}
+» Espíritus registrados: ${totalreg}
+» Hora actual: ${hour}
 
-╰─────❖ 𝓜𝓮𝓷𝓾 ❖─────╯
+Este bot fue invocado por *YoSoyYo*
+Resultados. No promesas.
 
-✦ 𝙸𝙽𝙵𝙾 𝙳𝙴 𝚂𝚄𝙼𝙾𝙽 ✦
-
-💻 Sistema: Multi-Device
-👤 Espíritu: @${userId.split('@')[0]}
-⏰ Tiempo activo: ${uptime}
-👥 Espíritus: ${totalreg} Espiritus
-⌚ Hora: ${hour}
-
-> Hecho con amor por: *_SoyMaycol_* (⁠◍⁠•⁠ᴗ⁠•⁠◍⁠)⁠❤
-
-≪──── ⋆𓆩✧𓆪⋆ ────≫
+╚══════════════════════════════════╝
 `.trim()
 
-  for (let [tag, cmds] of Object.entries(categories)) {
-    let tagName = tag.toUpperCase().replace(/_/g, ' ')
-    let deco = emojiRandom()
-    menuText += `
+for (let [tag, cmds] of Object.entries(categories)) {
+  let tagName = tag.toUpperCase().replace(/_/g, ' ')
+  menuText += `
 
-╭─━━━ ${deco} ${tagName} ${deco} ━━━╮
-${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
-╰─━━━━━━━━━━━━━━━━╯`
-  }
+╔═══ ${tagName} ═══╗
+${cmds.map(cmd => `║ ⇝ ${cmd}`).join('\n')}
+╚═════════════════╝`
+}
 
   // Mensaje previo cute
-  await conn.reply(m.chat, '⌜ ⊹ Espera tantito, espíritu curioso... ⊹ ⌟', m, {
+  await conn.reply(m.chat, '⌜ ⊹ Esperame idiota... ⊹ ⌟', m, {
     contextInfo: {
       externalAdReply: {
         title: botname,
-        body: "Un amor que nunca se acaba Jeje <3",
-        thumbnailUrl: 'https://files.catbox.moe/x9hw62.png',
+        body: "Que miras idiota",
+        thumbnailUrl: 'https://files.catbox.moe/ydal8w.mp4',
         sourceUrl: redes,
         mediaType: 1,
         showAdAttribution: true,
@@ -92,13 +85,13 @@ ${cmds.map(cmd => `│ ➯ ${cmd}`).join('\n')}
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
         newsletterJid: '120363372883715167@newsletter',
-        newsletterName: 'SoyMaycol <3',
+        newsletterName: 'SoyMaycol',
         serverMessageId: -1,
       },
       forwardingScore: 999,
       externalAdReply: {
         title: botname,
-        body: "Un amor que nunca se acaba Jeje <3",
+        body: "Que quieres",
         thumbnailUrl: banner,
         sourceUrl: redes,
         mediaType: 1,
