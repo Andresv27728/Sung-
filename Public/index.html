@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Bot Statistics Dashboard - Sistema Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    <meta name="description" content="Panel de estadísticas del bot y sistema de premium por clics">
+    <meta name="keywords" content="bot, whatsapp, premium, estadísticas">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Bot Statistics Dashboard</h1>
+            <p>✨ Panel de control y sistema de premium por clics ✨</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card status-online" id="statusCard">
+                <h3>🔄 Estado del Bot</h3>
+                <div class="value" id="botStatus">🔄 Cargando...</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>⏰ Tiempo Activo</h3>
+                <div class="value" id="uptime">🔄 Cargando...</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>👥 Usuarios Registrados</h3>
+                <div class="value" id="totalUsers">🔄 Cargando...</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>⚡ Comandos Ejecutados</h3>
+                <div class="value" id="totalCommands">🔄 Cargando...</div>
+            </div>
+        </div>
+
+        <div class="premium-section">
+            <h2>🎁 Sistema de Premium por Clics</h2>
+
+            <div class="phone-input-group">
+                <label for="phoneNumber">📱 Número de Teléfono (solo números):</label>
+                <input 
+                    type="text" 
+                    id="phoneNumber" 
+                    placeholder="Ejemplo: 51921826291"
+                    maxlength="15"
+                    autocomplete="tel"
+                >
+            </div>
+
+            <div class="click-display">
+                <h3>🎯 Clics Acumulados</h3>
+                <div class="click-count" id="clickCount">0</div>
+            </div>
+
+            <div class="controls">
+                <button class="btn btn-primary" id="clickBtn" disabled>
+                    🎮 Hacer Clic (+1 minuto premium)
+                </button>
+                <button class="btn btn-success" id="redeemBtn" disabled>
+                    🎁 Canjear Premium
+                </button>
+            </div>
+
+            <div class="premium-info">
+                <h4>💡 ¿Cómo funciona?</h4>
+                <p>• Cada clic te da 1 minuto de premium<br>
+                • Puedes acumular todos los clics que quieras<br>
+                • Al canjear, el bot te enviará un mensaje de confirmación<br>
+                • ¡Es completamente gratis!</p>
+            </div>
+
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPhone = '';
+        let clickCount = 0;
+
+        // Elementos del DOM
+        const phoneInput = document.getElementById('phoneNumber');
+        const clickBtn = document.getElementById('clickBtn');
+        const redeemBtn = document.getElementById('redeemBtn');
+        const clickCountDisplay = document.getElementById('clickCount');
+        const messageDiv = document.getElementById('message');
+
+        // Actualizar estadísticas del bot cada 30 segundos
+        async function updateStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const stats = await response.json();
+
+                document.getElementById('botStatus').textContent = stats.isOnline ? '🟢 En línea' : '🔴 Desconectado';
+                document.getElementById('uptime').textContent = stats.uptime || '0d 0h 0m';
+                document.getElementById('totalUsers').textContent = stats.totalUsers?.toLocaleString() || '0';
+                document.getElementById('totalCommands').textContent = stats.totalCommands?.toLocaleString() || '0';
+
+                const statusCard = document.getElementById('statusCard');
+                statusCard.className = `stat-card ${stats.isOnline ? 'status-online' : 'status-offline'}`;
+
+            } catch (error) {
+                console.error('Error actualizando estadísticas:', error);
+                showMessage('⚠️ Error al actualizar estadísticas', 'error');
+            }
+        }
+
+        // Validar número de teléfono
+        function validatePhoneNumber(phone) {
+            return /^[0-9]{8,15}$/.test(phone);
+        }
+
+        // Mostrar mensajes
+        function showMessage(text, type = 'success') {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type} show`;
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        // Cargar clics guardados
+        async function loadClicks(phoneNumber) {
+            try {
+                const response = await fetch(`/api/clicks/${phoneNumber}`);
+                const data = await response.json();
+                clickCount = data.clicks || 0;
+                updateClickDisplay();
+            } catch (error) {
+                console.error('Error cargando clics:', error);
+                clickCount = 0;
+                updateClickDisplay();
+            }
+        }
+
+        // Actualizar display de clics
+        function updateClickDisplay() {
+            clickCountDisplay.textContent = clickCount.toLocaleString();
+            redeemBtn.disabled = clickCount === 0;
+
+            if (clickCount > 0) {
+                redeemBtn.textContent = `🎁 Canjear ${clickCount} minutos`;
+            } else {
+                redeemBtn.textContent = '🎁 Canjear Premium';
+            }
+        }
+
+        // Event listeners
+        phoneInput.addEventListener('input', function() {
+            const phone = this.value.replace(/\D/g, '');
+            this.value = phone;
+
+            if (validatePhoneNumber(phone)) {
+                currentPhone = phone;
+                clickBtn.disabled = false;
+                loadClicks(phone);
+                showMessage('✅ Número válido - Puedes empezar a hacer clics', 'success');
+            } else {
+                currentPhone = '';
+                clickBtn.disabled = true;
+                redeemBtn.disabled = true;
+                clickCount = 0;
+                updateClickDisplay();
+                if (phone.length > 0) {
+                    showMessage('❌ Número inválido - Debe tener entre 8 y 15 dígitos', 'error');
+                }
+            }
+        });
+
+        clickBtn.addEventListener('click', async function() {
+            if (!currentPhone) return;
+
+            const originalText = this.textContent;
+            this.disabled = true;
+            this.innerHTML = '<span class="loading"></span> Procesando...';
+
+            try {
+                const response = await fetch('/api/click', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phoneNumber: currentPhone })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    clickCount = data.clicks;
+                    updateClickDisplay();
+                    showMessage(`🎉 ¡Click registrado! Total: ${clickCount} minutos`, 'success');
+                } else {
+                    showMessage(`❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Error de conexión', 'error');
+            } finally {
+                this.disabled = false;
+                this.textContent = originalText;
+            }
+        });
+
+        redeemBtn.addEventListener('click', async function() {
+            if (!currentPhone || clickCount === 0) return;
+
+            const confirmRedeem = confirm(`¿Estás seguro de canjear ${clickCount} minutos de premium?\n\nEl bot te enviará un mensaje de confirmación.`);
+            if (!confirmRedeem) return;
+
+            const originalText = this.textContent;
+            this.disabled = true;
+            this.innerHTML = '<span class="loading"></span> Enviando...';
+
+            try {
+                const response = await fetch('/api/redeem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phoneNumber: currentPhone })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    clickCount = 0;
+                    updateClickDisplay();
+                    showMessage(`🎊 ¡${data.premiumMinutes} minutos canjeados exitosamente! Revisa tu WhatsApp.`, 'success');
+                } else {
+                    showMessage(`❌ Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ Error de conexión', 'error');
+            } finally {
+                this.disabled = currentPhone && clickCount > 0 ? false : true;
+                this.textContent = originalText;
+            }
+        });
+
+        // Inicializar
+        updateStats();
+        setInterval(updateStats, 30000); // Actualizar cada 30 segundos
+
+        // Efectos visuales al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.stat-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
