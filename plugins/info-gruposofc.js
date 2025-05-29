@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 let handler  = async (m, { conn, usedPrefix, command }) => {
 
-let grupos = `*Hola!, te invito a unirte a los grupos oficiales del Bot para convivir con la comunidad.....*
+let grupos = `*Hola!, te invito a ser parte de nuestros gran ejército*
 
 - ${namegrupo}
 > *❀* ${gp1}
