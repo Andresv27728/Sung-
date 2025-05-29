@@ -1,0 +1,69 @@
+
+import { readdirSync, readFileSync } from 'fs'
+
+let handler = async (m, { conn, usedPrefix }) => {
+  try {
+    const pluginFiles = readdirSync('./plugins')
+    const customCommands = []
+
+    for (let file of pluginFiles) {
+      if (!file.endsWith('.js')) continue
+      
+      try {
+        const content = readFileSync(`./plugins/${file}`, 'utf8')
+        if (content.includes('// Comando agregado automáticamente por addcommand')) {
+          const plugin = global.plugins[file]
+          if (plugin && plugin.help && plugin.tags) {
+            customCommands.push({
+              file: file,
+              command: plugin.help[0] || 'desconocido',
+              category: plugin.tags[0] || 'sin categoría',
+              description: content.match(/Descripción: (.+)/)?.[1] || 'Sin descripción'
+            })
+          }
+        }
+      } catch (e) {
+        continue
+      }
+    }
+
+    if (customCommands.length === 0) {
+      return m.reply('📝 No hay comandos personalizados creados con addcommand')
+    }
+
+    let text = `╔════════════════════════════════╗
+║       COMANDOS PERSONALIZADOS    ║
+╚════════════════════════════════╝
+
+📊 *Total de comandos:* ${customCommands.length}
+
+`
+
+    customCommands.forEach((cmd, index) => {
+      text += `
+*${index + 1}.* 📝 *${cmd.command}*
+   • Categoría: ${cmd.category}
+   • Archivo: ${cmd.file}
+   • Uso: ${usedPrefix}${cmd.command}
+   • Descripción: ${cmd.description}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`
+    })
+
+    text += `
+
+💡 *Tip:* Usa ${usedPrefix}delcommand <nombre> para eliminar un comando`
+
+    m.reply(text)
+
+  } catch (error) {
+    console.error(error)
+    m.reply('❌ Error al listar comandos: ' + error.message)
+  }
+}
+
+handler.help = ['listcommands', 'listcmd']
+handler.tags = ['owner']
+handler.command = ['listcommands', 'listcmd', 'comandospersonalizados']
+handler.rowner = true
+
+export default handler
