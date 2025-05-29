@@ -16,9 +16,9 @@ global.botNumber = '' //Ejemplo: 51921826291
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
 global.owner = [
-  ['51921826291', '🜲 Propietario 🜲', true],
-  ['5492916450307'],
-  ['18098664948']
+  ['573133374132', '🜲 Propietario 🜲', true],
+  ['573133374132'],
+  ['573133374132']
 ];
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
@@ -50,7 +50,7 @@ global.etiqueta = 'YoSoyYo'
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
-global.moneda = 'Yenes'
+global.moneda = 'coins'
 global.welcom1 = '❍ Edita Con El Comando setwelcome'
 global.welcom2 = '❍ Edita Con El Comando setbye'
 global.banner = 'https://files.catbox.moe/b770a5.jpeg'
@@ -60,11 +60,11 @@ global.avatar = 'https://files.catbox.moe/p55m1q.jpeg'
 
 global.gp1 = 'https://chat.whatsapp.com/EprzCjr7XFyAIFr9OfBh2o'
 global.comunidad1 = 'https://whatsapp.com/channel/0029VayXJte65yD6LQGiRB0R'
-global.channel = 'https://whatsapp.com/channel/0029VayXJte65yD6LQGiRB0R'
-global.channel2 = 'https://whatsapp.com/channel/0029VayXJte65yD6LQGiRB0R'
-global.md = 'https://github.com/SoySapo6/MaycolAI'
+global.channel = 'https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k'
+global.channel2 = 'https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k'
+global.md = 'https://github.com/Andresv27728/Sung-.git'
 global.correo = 'karatekidamericatv@gmail.com'
-global.cn ='https://whatsapp.com/channel/0029VayXJte65yD6LQGiRB0R';
+global.cn ='https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k';
 
 //*─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─⭒─ׄ─ׅ─ׄ─*
 
