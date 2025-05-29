@@ -1,0 +1,67 @@
+
+import { unlinkSync, existsSync, readFileSync } from 'fs'
+
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+  if (!text) {
+    return m.reply(`❌ Especifica el nombre del comando a eliminar
+
+📝 *Uso:* ${usedPrefix + command} <nombre>
+
+📌 *Ejemplo:* ${usedPrefix + command} micomando
+
+💡 *Tip:* Usa ${usedPrefix}listcmd para ver comandos disponibles`)
+  }
+
+  const nombre = text.trim().toLowerCase()
+  const pluginFiles = ['plugins/', 'plugins/'].map(dir => 
+    ['main', 'info', 'ai', 'anime', 'owner', 'grupo', 'grupo-admin', 
+     'descargas', 'tools', 'fun', 'game', 'rpg', 'sticker', 'audio', 
+     'imagen', 'maker', 'convertidor', 'nsfw', 'premium', 'jadibot', 'config']
+     .map(cat => `${dir}${cat}-${nombre}.js`)
+  ).flat()
+
+  let encontrado = false
+  let archivoEliminado = ''
+
+  for (let filePath of pluginFiles) {
+    if (existsSync(filePath)) {
+      try {
+        const content = readFileSync(filePath, 'utf8')
+        if (content.includes('// Comando agregado automáticamente por addcommand')) {
+          unlinkSync(filePath)
+          delete global.plugins[filePath.split('/').pop()]
+          encontrado = true
+          archivoEliminado = filePath
+          break
+        }
+      } catch (e) {
+        continue
+      }
+    }
+  }
+
+  if (!encontrado) {
+    return m.reply(`❌ No se encontró el comando "${nombre}" o no fue creado con addcommand
+
+💡 *Tip:* Usa ${usedPrefix}listcmd para ver comandos disponibles`)
+  }
+
+  m.reply(`╔════════════════════════════════╗
+║       COMANDO ELIMINADO          ║
+╚════════════════════════════════╝
+
+✅ *Comando eliminado exitosamente!*
+
+📝 *Detalles:*
+• Comando: ${nombre}
+• Archivo: ${archivoEliminado}
+
+🔄 *El comando ya no está disponible en el menú*`)
+}
+
+handler.help = ['delcommand', 'delcmd']
+handler.tags = ['owner']
+handler.command = ['delcommand', 'delcmd', 'eliminarcmd']
+handler.rowner = true
+
+export default handler
