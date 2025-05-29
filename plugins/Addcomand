@@ -1,0 +1,105 @@
+
+import { writeFileSync, readFileSync, existsSync } from 'fs'
+
+let handler = async (m, { conn, text, args, usedPrefix, command }) => {
+  if (!text) {
+    return m.reply(`╔════════════════════════════════╗
+║          ADD COMMAND SYSTEM          ║
+╚════════════════════════════════╝
+
+📝 *Uso:* ${usedPrefix + command} <nombre>|<categoría>|<descripción>
+
+📌 *Ejemplo:*
+${usedPrefix + command} micomando|fun|Este comando hace algo divertido
+
+📋 *Categorías disponibles:*
+• main, info, ai, anime, owner
+• grupo, grupo-admin, descargas, tools
+• fun, game, rpg, sticker, audio
+• imagen, maker, convertidor, nsfw
+• premium, jadibot, config
+
+⚠️ *Nota:* Solo el owner puede usar este comando`)
+  }
+
+  let [nombre, categoria, descripcion] = text.split('|')
+  
+  if (!nombre || !categoria || !descripcion) {
+    return m.reply('❌ Faltan parámetros. Usa: nombre|categoría|descripción')
+  }
+
+  nombre = nombre.trim().toLowerCase()
+  categoria = categoria.trim().toLowerCase()
+  descripcion = descripcion.trim()
+
+  // Validar categoría
+  const categoriasValidas = [
+    'main', 'info', 'ai', 'anime', 'owner', 'grupo', 'grupo-admin', 
+    'descargas', 'tools', 'fun', 'game', 'rpg', 'sticker', 'audio', 
+    'imagen', 'maker', 'convertidor', 'nsfw', 'premium', 'jadibot', 'config'
+  ]
+
+  if (!categoriasValidas.includes(categoria)) {
+    return m.reply(`❌ Categoría inválida. Categorías disponibles:\n${categoriasValidas.join(', ')}`)
+  }
+
+  // Crear el archivo del plugin
+  const fileName = `${categoria}-${nombre}.js`
+  const filePath = `plugins/${fileName}`
+
+  if (existsSync(filePath)) {
+    return m.reply(`❌ Ya existe un comando con ese nombre: ${fileName}`)
+  }
+
+  const pluginTemplate = `// Comando agregado automáticamente por addcommand
+// Creado: ${new Date().toLocaleString('es-PE')}
+
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+  // Aquí va la lógica del comando
+  m.reply(\`✅ Comando \${command} ejecutado!\\n\\n📝 Descripción: ${descripcion}\\n\\n⚠️ Este comando fue creado con addcommand y necesita ser programado.\`)
+}
+
+handler.help = ['${nombre}']
+handler.tags = ['${categoria}']
+handler.command = ['${nombre}']
+handler.register = true
+
+export default handler`
+
+  try {
+    // Escribir el archivo
+    writeFileSync(filePath, pluginTemplate, 'utf8')
+
+    // Recargar plugins
+    delete global.plugins[fileName]
+    global.plugins[fileName] = (await import(`../${filePath}?update=${Date.now()}`)).default
+
+    m.reply(`╔════════════════════════════════╗
+║        COMANDO AGREGADO          ║
+╚════════════════════════════════╝
+
+✅ *Comando creado exitosamente!*
+
+📝 *Detalles:*
+• Nombre: ${nombre}
+• Categoría: ${categoria}
+• Descripción: ${descripcion}
+• Archivo: ${fileName}
+
+🔄 *El comando ya está disponible en el menú*
+📍 *Úsalo con:* ${usedPrefix}${nombre}
+
+⚠️ *Nota:* El comando necesita ser programado editando el archivo ${fileName}`)
+
+  } catch (error) {
+    console.error(error)
+    m.reply('❌ Error al crear el comando: ' + error.message)
+  }
+}
+
+handler.help = ['addcommand', 'addcmd']
+handler.tags = ['owner']
+handler.command = ['addcommand', 'addcmd', 'agregarcmd']
+handler.rowner = true
+
+export default handler
