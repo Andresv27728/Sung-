@@ -169,21 +169,6 @@ ${userInfo}
 ║    registro o permisos especiales
 ╚════════════════════════════════╝`
 
-  // Mensaje previo
-  await conn.reply(m.chat, '⌜ ⊹ Cargando menú... ⊹ ⌟', m, {
-    contextInfo: {
-      externalAdReply: {
-        title: botname,
-        body: "Sistema de comandos",
-        thumbnailUrl: 'https://files.catbox.moe/ydal8w.mp4',
-        sourceUrl: redes,
-        mediaType: 1,
-        showAdAttribution: true,
-        renderLargerThumbnail: true,
-      }
-    }
-  })
-
   // Enviar menú completo
   await conn.sendMessage(m.chat, {
     video: { url: 'https://files.catbox.moe/i74z9e.mp4' },
