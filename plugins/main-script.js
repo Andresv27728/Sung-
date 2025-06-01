@@ -1,13 +1,13 @@
 const handler = async (m, { conn }) => {
   const texto = `
-🌸 _*Mai Bot Sc*_ 🌸
+⚔️ _*SUNG JIM WO*_ ⚔️
 
 \`\`\`Repositorio OFC:\`\`\`
-https://github.com/Ado926/MaiBot
+*no hay, no existe, no lo crearon*
 
-> 🌻 Deja tu estrellita ayudaría mucho :D
+> no tu estrellita ayudaría mucho xd
 
-🔗 *Comunidad Oficial:* https://chat.whatsapp.com/KqkJwla1aq1LgaPiuFFtEY
+🔗 *Comunidad Oficial:* https://whatsapp.com/channel/0029Vb5atcVL7UVQwAB9tU2k
   `.trim()
 
   await conn.reply(m.chat, texto, m)
