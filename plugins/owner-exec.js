@@ -44,7 +44,7 @@ handler.customPrefix = /^=?> /
 handler.command = /(?:)/i
 handler.rowner = true
 
-// export default handler
+export default handler
 
 class CustomArray extends Array {
   constructor(...args) {

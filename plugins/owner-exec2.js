@@ -22,4 +22,4 @@ handler.customPrefix = ['$']
 handler.command = new RegExp
 handler.rowner = true
 
-// export default handler
+export default handler
