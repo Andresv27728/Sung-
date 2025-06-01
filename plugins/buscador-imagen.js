@@ -1,8 +1,3 @@
-/*
-• @David-Chian
-- https://github.com/David-Chian
-*/
-
 import { googleImage } from '@bochilteam/scraper';
 import baileys from '@whiskeysockets/baileys';
 

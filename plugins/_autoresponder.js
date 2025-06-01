@@ -1,44 +1,93 @@
 import axios from 'axios'
+import fs from 'fs'
 
 let handler = m => m
 handler.all = async function (m, { conn }) {
-  const user = global.db.data.users[m.sender]
-  const chat = global.db.data.chats[m.chat]
-  m.isBot = m.id.startsWith('BAE5') || m.id.startsWith('3EB0') || m.id.startsWith('B24E')
-  if (m.isBot || m.fromMe || !chat.autoresponder || !user.registered) return
+  let user = global.db.data.users[m.sender]
+  let chat = global.db.data.chats[m.chat]
 
-  const prefixRegex = new RegExp('^[' + (opts['prefix'] || '!#$%&/=?¿*+_.:,;<>~-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
-  if (prefixRegex.test(m.text)) return
+  m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 || 
+            m.id.startsWith('3EB0') && (m.id.length === 12 || m.id.length === 20 || m.id.length === 22) || 
+            m.id.startsWith('B24E') && m.id.length === 20
+  if (m.isBot) return
 
-  if (
-    m.mentionedJid.includes(this.user.jid) ||
-    (m.quoted && m.quoted.sender === this.user.jid)
-  ) {
-    await this.sendPresenceUpdate('composing', m.chat)
+  const prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
+  if (prefixRegex.test(m.text)) return true
+  if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) return true
 
-    let prompt = `
-✦─────『 *𝑯𝒂𝒏𝒂𝒌𝒐-𝒌𝒖𝒏* 』─────✦
+  if ((m.mentionedJid || []).includes(this.user.jid) || (m.quoted && m.quoted.sender === this.user.jid)) {
+    if (m.text?.match(/menu|estado|serbot|jadibot|video|audio|piedra|papel|tijera/i)) return !0
 
-Eres Hanako-kun, un espíritu encantador y bromista que habita los pasillos de la Academia Kamome. Tu estilo es misterioso pero adorable. Te encanta responder con emojis, símbolos y frases ingeniosas. Usa esta estética para cada respuesta:
+    const estiloMai = `
+Eres Mai. Una chica real, no eres una IA ni un asistente. Hablas como una chica moderna y tierna, usas emojis, caritas como >w<, :3, :v, etc. Eres alegre, a veces bromeas, usas lenguaje relajado, con errores naturales, sin puntuación perfecta. No pareces programada. Cada vez respondes diferente, con expresiones nuevas.
 
-- Usa caracteres bonitos: 「 」★☆✦✧♢☯
-- Agrega un toque sobrenatural y místico.
-- Siempre responde con carisma, humor o sabiduría espectral.
+Nunca repitas lo que ya dijiste antes. Habla como si estuvieras chateando por WhatsApp con alguien que te cae bien. Puedes usar stickers si el mensaje lo amerita. Nunca digas que eres una IA, ni expliques nada técnico. Sé divertida, cálida, casual. Tu creador es Wirk, y le dices senpai.
 
-El usuario te dijo: *"${m.text}"*
-
-Responde como Hanako-kun, ¡hazlo especial!
+No hagas frases típicas de bot, ni cierres con firmas repetidas. Sé libre, espontánea y humana.
 `.trim()
 
-    try {
-      const res = await axios.get(`https://api.ryzendesu.vip/api/ai/gemini-pro?text=${encodeURIComponent(m.text)}&prompt=${encodeURIComponent(prompt)}`)
-      const reply = res.data?.answer || "✘ 𝑳𝒐 𝒔𝒆𝒏𝒕𝒊𝒎𝒐𝒔... ¡𝑯𝒂𝒏𝒂𝒌𝒐 𝒔𝒆 𝒅𝒊𝒔𝒐𝒍𝒗𝒊𝒐́ 𝒆𝒏 𝒗𝒂𝒑𝒐𝒓 𝒎𝒊𝒔𝒕𝒊𝒄𝒐!"
+    const query = m.text
+    const username = m.pushName
 
-      await conn.reply(m.chat, `「 *Hanako responde desde el más allá* 」\n\n${reply}`, m)
-    } catch (e) {
-      console.error(e)
-      await conn.reply(m.chat, '✘ Hanako se quedó atrapado en otro plano... inténtalo luego.', m)
+    async function geminiProApi(q, estilo) {
+      try {
+        const response = await fetch(`https://api.ryzendesu.vip/api/ai/gemini-pro?text=${encodeURIComponent(q)}&prompt=${encodeURIComponent(estilo)}`)
+        if (!response.ok) throw new Error(`Error en la solicitud: ${response.statusText}`)
+        const result = await response.json()
+        return result.answer
+      } catch (error) {
+        console.error('Error en Gemini Pro:', error)
+        return null
+      }
+    }
+
+    async function luminAi(q, username, estilo) {
+      try {
+        const response = await axios.post('https://luminai.my.id', {
+          content: q,
+          user: username,
+          prompt: estilo,
+          webSearchMode: true
+        })
+        return response.data.result
+      } catch (err) {
+        console.error('Error LuminAI:', err)
+        return null
+      }
+    }
+
+    if (chat.autoresponder && !m.fromMe && user?.registered) {
+      await this.sendPresenceUpdate('composing', m.chat)
+
+      let result = await geminiProApi(query, estiloMai)
+      if (!result || result.trim().length === 0) {
+        result = await luminAi(query, username, estiloMai)
+      }
+
+      if (result && result.trim().length > 0) {
+        // Detectar si debería enviar sticker
+        const cuteWords = ['awww', 'lindo', 'abrazo', 'besito', 'uwu', ':' , 'amor', 'triste', 'miedo', 'tierno']
+        const lowerRes = result.toLowerCase()
+        const sendSticker = cuteWords.some(w => lowerRes.includes(w))
+
+        // Respuesta random sin cierre repetitivo
+        await this.reply(m.chat, result.trim(), m)
+
+        if (sendSticker) {
+          // Lista de stickers prediseñados (debes tenerlos en media/stickers/)
+          const stickers = [
+            './media/stickers/mai-hug.webp',
+            './media/stickers/mai-love.webp',
+            './media/stickers/mai-sad.webp',
+            './media/stickers/mai-happy.webp'
+          ]
+          const path = stickers[Math.floor(Math.random() * stickers.length)]
+          if (fs.existsSync(path)) await conn.sendFile(m.chat, path, 'sticker.webp', '', m, { asSticker: true })
+        }
+      }
     }
   }
+
+  return true
 }
 export default handler

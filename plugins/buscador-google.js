@@ -2,11 +2,11 @@ import fetch from 'node-fetch';
 
 let handler = async (m, { text }) => {
   if (!text) {
-    m.reply(`${emoji} Por favor, proporciona el termino de búsqueda que deseas realizar a *Google*.`);
+    m.reply(`🐇 Por favor, proporciona el término de búsqueda que deseas realizar a *Google*.`);
     return;
   }
 
-  const apiUrl = `https://delirius-apiofc.vercel.app/search/googlesearch?query=${encodeURIComponent(text)}`;
+  const apiUrl = `https://vapis.my.id/api/googlev1?q=${encodeURIComponent(text)}`;
 
   try {
     const response = await fetch(apiUrl);
@@ -17,19 +17,18 @@ let handler = async (m, { text }) => {
       return;
     }
 
-    let replyMessage = `${emoji2} Resultados de la búsqueda:\n\n`;
-    result.data.slice(0, 1).forEach((item, index) => {
+    let replyMessage = `Resultados de la búsqueda:\n\n`;
+    result.data.forEach((item, index) => {
       replyMessage += `☁️ *${index + 1}. ${item.title}*\n`;
-      replyMessage += `📰 *${item.description}*\n`;
-      replyMessage += `🔗 URL: ${item.url}`;
+      replyMessage += `📰 *${item.desc}*\n`;
+      replyMessage += `🔗 URL: ${item.link}\n\n`;
     });
 
-m.react('✅')
-
+    m.react('✅');
     m.reply(replyMessage);
   } catch (error) {
-    console.error(`${msm} Error al realizar la solicitud a la API:`, error);
-    m.reply(`${msm} Ocurrió un error al obtener los resultados.`);
+    console.error(`Error al realizar la solicitud a la API:`, error);
+    m.reply(`Ocurrió un error al obtener los resultados.`);
   }
 };
 

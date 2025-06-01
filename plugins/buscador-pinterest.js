@@ -1,8 +1,3 @@
-/*
-• @David-Chian
-- https://github.com/David-Chian
-*/
-
 import fetch from 'node-fetch';
 import baileys from '@whiskeysockets/baileys';
 
@@ -69,7 +64,8 @@ const pinterest = async (m, { conn, text, usedPrefix, command }) => {
 
         const images = data.slice(0, 10).map(img => ({ type: "image", data: { url: img.image_large_url } }));
 
-        const caption = `❀ *Resultados de búsqueda para:* ${text}`;
+        const caption = `❀ *𝐑𝐞𝐬𝐮𝐥𝐭𝐚𝐝𝐨𝐬 𝐝𝐞 𝐁𝐮́𝐬𝐪𝐮𝐞𝐝𝐚 𝐏𝐚𝐫𝐚:* ${text} 
+        ⌦ ⍴᥆ᥕᥱrᥱძ ᑲᥡ ᥕіrk 🌸`;
         await sendAlbumMessage(m.chat, images, { caption, quoted: m });
 
         await m.react('✅');
