@@ -44,7 +44,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     users[senderId].exp += evento.exp;
   }
 
-  let img = 'https://raw.githubusercontent.com/The-King-Destroy/Adiciones/main/Contenido/1745558209798.jpeg';
+  let img = 'https://files.catbox.moe/7wps7y.jpg';
   let info = `╭━〔 Mazmoras Antiguas 〕\n` +
              `┃Misión: *${evento.nombre}*\n` +
              `┃Evento: ${evento.mensaje}\n` +
