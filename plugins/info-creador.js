@@ -13,12 +13,12 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
     let username = conn.getName(m.sender);
 
     let list = [{
-        displayName: "💖💝 Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟ 💝 💖  - Creador de tiburón 🦈 BOT",
-        vcard: `BEGIN:VCARD\nVERSION:3.0\nFN: Wirk - Bot Developer\nitem1.TEL;waid=573133374132:573133374132\nitem1.X-ABLabel:Número\nitem2.ADR:;;🇨🇴 ;;;;\nitem2.X-ABLabel:País\nEND:VCARD`,
+        displayName: "Wirk - Creador de Mai 🌹",
+        vcard: `BEGIN:VCARD\nVERSION:3.0\nFN: Wirk - Bot Developer\nitem1.TEL;waid=50493732693:50493732693\nitem1.X-ABLabel:Número\nitem2.ADR:;;Honduras;;;;\nitem2.X-ABLabel:País\nEND:VCARD`,
     }];
 
     const imageUrl = 'https://qu.ax/VnCGk.jpg';
-    const texto = `╭───────❀\n│ *Contacto del creador*\n╰───────❀\n\n• *Nombre:* 💖💝 Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟ 💝 💖\n• *Desde:* Honduras\n• *Creador de:* Mai\n\n_“Soy un tiburón 🦈.”_\n\nPuedes solo Si tienes problemas o sugerencias..`;
+    const texto = `╭───────❀\n│ *Contacto del creador*\n╰───────❀\n\n• *Nombre:* Wirk\n• *Desde:* Honduras\n• *Creador de:* Mai\n\n_“El código es temporal, pero la creatividad... esa es eterna.”_\n\nPuedes contactarlo si tienes ideas, bugs o quieres apoyar el proyecto..`;
 
     await conn.sendMessage(m.chat, {
         contacts: {
@@ -29,9 +29,9 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
             externalAdReply: {
                 showAdAttribution: true,
                 title: 'Mai - Bot Kawaii',
-                body: 'Creador: 💖💝 Y⃟o⃟ S⃟o⃟y⃟ Y⃟o⃟ 💝 💖',
+                body: 'Creador: Wirk',
                 thumbnailUrl: imageUrl,
-                sourceUrl: 'https://github.com/Andresv27728',
+                sourceUrl: 'https://github.com/WillZek',
                 mediaType: 1,
                 renderLargerThumbnail: true
             }
